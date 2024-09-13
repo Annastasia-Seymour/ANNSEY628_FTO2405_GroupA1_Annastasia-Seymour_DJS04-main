@@ -1,5 +1,10 @@
 import { books, authors, genres, BOOKS_PER_PAGE } from './data.js'
 
+import BookPreview from './bookPreview.js';
+// Register the component
+customElements.define('book-preview', BookPreview);// do i register it twice?
+
+
 let page = 1;
 let matches = books
 
@@ -188,7 +193,8 @@ function updateUIWithFilteredBooks(result) {
 }
 
 // function creates and returns a document fragment containing book previews.
-function createBookPreviews(books) {
+/*function createBookPreviews(books) {
+    
     const fragment = document.createDocumentFragment(); //created to hold the book preview elements
     //using a fragment improves performance by avoiding multiple reflows and repaints in the DOM
     for (const { author, id, image, title } of books) {
@@ -205,7 +211,7 @@ function createBookPreviews(books) {
         fragment.appendChild(element);// appends to the fragment
     }
     return fragment;// returns to be inserted into DOM
-}
+}*/
 
 
 // Function updates show button based on the number of remaining books

@@ -28,16 +28,10 @@
 
     <script type="module" src="./scripts.js"></script>
     <script type="module" src="./data.js"></script>
-    <script>
-      customElements.define('book-preview', class extends HTMLElement{
-
-        constructor(){
-          super();//Grants access to the parent class, so it can inherit its lineage from the HTML
-          //Like pinocchio becoming a real boy
-          //Always call super first in a constructor , After calling super(), you can add custom functionality specific to the new element.
-        }
-      })
-    </script>
+    <!-- <script>
+      customElements.define('book-preview', BookPreview)
+       //Step 2 : registers the component globally 
+    </script> -->
   </head>
   <body>
 
