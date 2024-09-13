@@ -193,25 +193,21 @@ function updateUIWithFilteredBooks(result) {
 }
 
 // function creates and returns a document fragment containing book previews.
-/*function createBookPreviews(books) {
+function createBookPreviews(bookList) {
+    const fragment = document.createDocumentFragment();
     
-    const fragment = document.createDocumentFragment(); //created to hold the book preview elements
-    //using a fragment improves performance by avoiding multiple reflows and repaints in the DOM
-    for (const { author, id, image, title } of books) {
-        const element = document.createElement('button'); //creates button element
-        element.classList = 'preview'; // adds data attributes to store the books id
-        element.setAttribute('data-preview', id);
-        element.innerHTML = `
-            <img class="preview__image" src="${image}" />
-            <div class="preview__info">
-                <h3 class="preview__title">${title}</h3>
-                <div class="preview__author">${authors[author]}</div>
-            </div>
-        `;
-        fragment.appendChild(element);// appends to the fragment
-    }
-    return fragment;// returns to be inserted into DOM
-}*/
+    bookList.forEach((book) => {
+        const preview = document.createElement('book-preview');
+        preview.setAttribute('title', book.title);
+        preview.setAttribute('author', authors[book.author]); // Assuming `authors` is a lookup object
+        preview.setAttribute('description', book.description);
+        
+        fragment.appendChild(preview);
+    });
+    
+    return fragment;
+}
+
 
 
 // Function updates show button based on the number of remaining books
