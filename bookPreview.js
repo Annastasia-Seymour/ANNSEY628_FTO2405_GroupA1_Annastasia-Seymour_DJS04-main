@@ -1,10 +1,16 @@
-// BookPreview.js
+//BookPreview.js
+// Step: Create component class (classical inheritance)
+// thought importing might help import { books, authors, genres, BOOKS_PER_PAGE } from './data.js'
+// Export so we can use this custom element
 export default class BookPreview extends HTMLElement {
     constructor() {
-        super();
+        super();/* Grants access to the parent class, so it can inherit its lineage from the HTML
+        Like pinocchio becoming a real boy
+        Always call super first in a constructor. After calling super(), add 
+        custom functionality specific to the new element. */
         this.attachShadow({ mode: 'open' });
 
-        // Style for the component
+     // Render the content inside the shadow DOM
         this.shadowRoot.innerHTML = `
             <style>
                 :host {
@@ -62,6 +68,7 @@ export default class BookPreview extends HTMLElement {
     }
 
     connectedCallback() {
+        // Called when the component is added to the DOM
         this.render();
     }
 
