@@ -44,23 +44,19 @@ displayBookInfo(){
  //create a function for the books that are rendered
  // need to create objects for abstractions
 
- function renderBookList(bookList, container) {
+// In your script.js
+function renderBookList(bookList, container) {
     const fragment = document.createDocumentFragment();
-    for (const { author, id, image, title } of bookList) {
-        const element = document.createElement('button');
-        element.classList = 'preview';
-        element.setAttribute('data-preview', id);
-        element.innerHTML = `
-            <img class="preview__image" src="${image}" />
-            <div class="preview__info">
-                <h3 class="preview__title">${title}</h3>
-                <div class="preview__author">${authors[author]}</div>
-            </div>
-        `;
-        fragment.appendChild(element);
+    for (const { id, image, title, author } of bookList) {
+        const bookElement = document.createElement('book-preview');
+        bookElement.setAttribute('title', title);
+        bookElement.setAttribute('author', authors[author]);
+        bookElement.setAttribute('image', image);
+        fragment.appendChild(bookElement);
     }
     container.appendChild(fragment);
 }
+
 
 renderBookList(matches.slice(0, BOOKS_PER_PAGE), document.querySelector('[data-list-items]'));
 //Calls the function , matches refers to the data that houses the books 
@@ -201,6 +197,7 @@ function createBookPreviews(bookList) {
         preview.setAttribute('title', book.title);
         preview.setAttribute('author', authors[book.author]); // Assuming `authors` is a lookup object
         preview.setAttribute('description', book.description);
+        preview.setAttribute('image', book.image);
         
         fragment.appendChild(preview);
     });

@@ -1,57 +1,66 @@
-//BookPreview.js
-// Step: Create component class (classical inheritance)
-class BookPreview extends HTMLElement {
+// BookPreview.js
+export default class BookPreview extends HTMLElement {
     constructor() {
-        super(); /* Grants access to the parent class, so it can inherit its lineage from the HTML
-        Like pinocchio becoming a real boy
-        Always call super first in a constructor. After calling super(), add 
-        custom functionality specific to the new element. */
-        this.attachShadow({mode: 'open'}); // Attach Shadow DOM
+        super();
+        this.attachShadow({ mode: 'open' });
+
+        // Style for the component
+        this.shadowRoot.innerHTML = `
+            <style>
+                :host {
+                    display: block;
+                    font-family: Arial, sans-serif; /* Match your global font */
+                    color: var(--text-color, black); /* Use a variable for text color */
+                }
+                .preview {
+                    border: 1px solid #ddd;
+                    border-radius: 4px;
+                    overflow: hidden;
+                    display: flex;
+                    margin: 10px;
+                    background: var(--background-color, white);
+                }
+                .preview__image {
+                    width: 100px;
+                    height: 150px;
+                    object-fit: cover;
+                }
+                .preview__info {
+                    padding: 10px;
+                    display: flex;
+                    flex-direction: column;
+                }
+                .preview__title {
+                    font-size: 1.2em;
+                    margin: 0;
+                }
+                .preview__author {
+                    color: var(--author-color, grey);
+                }
+            </style>
+            <div class="preview">
+                <img class="preview__image" src="" alt="Book cover">
+                <div class="preview__info">
+                    <h3 class="preview__title"></h3>
+                    <div class="preview__author"></div>
+                </div>
+            </div>
+        `;
     }
 
     connectedCallback() {
-        // Called when the component is added to the DOM
         this.render();
     }
 
     render() {
-        const title = this.getAttribute('title');
-        const author = this.getAttribute('author');
-        const description = this.getAttribute('description');
+        const title = this.getAttribute('title') || 'Unknown Title';
+        const author = this.getAttribute('author') || 'Unknown Author';
+        const image = this.getAttribute('image') || '';
 
-        // Render the content inside the shadow DOM
-        this.shadowRoot.innerHTML = `
-            <style>
-                /*Add styling components */
-                .book-preview {
-                    border: 1px solid #ccc;
-                    padding: 10px;
-                    margin: 10px;
-                    border-radius: 5px;
-                    max-width: 300px;
-                    background-color: #f9f9f9;
-                }
-                .book-title {
-                    font-size: 18px;
-                    font-weight: bold;
-                }
-                .book-author {
-                    font-size: 16px;
-                    color: #555;
-                }
-                .book-description {
-                    font-size: 14px;
-                    color: #333;
-                }
-            </style>
-            <div class="book-preview">
-                <div class="book-title">${title}</div>
-                <div class="book-author">by ${author}</div>
-                <div class="book-description">${description}</div>
-            </div>
-        `;
+        this.shadowRoot.querySelector('.preview__title').textContent = title;
+        this.shadowRoot.querySelector('.preview__author').textContent = author;
+        this.shadowRoot.querySelector('.preview__image').src = image;
     }
 }
 
-// Export so we can use this custom element
-export default BookPreview;
+//customElements.define('book-preview', BookPreview);
